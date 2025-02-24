@@ -1,13 +1,25 @@
-% Define parameters
-OC = 40;
-AP = 50;
-PB = 50;
-OA = 60;
-BC = 60;
+clear;      % Clears all variables from the workspace
+clc;        % Clears the command window
+close all;  % Closes all figure windows
 
-% Define Px and Py range for animation
-Px_values = [linspace(-20, 50, 30), linspace(50, 50, 30), linspace(50, -20, 30), linspace(-20, -20, 30)]; % Varying Px
-Py_values = [linspace(82, 82, 30), linspace(82, 60, 30), linspace(60, 60, 30), linspace(60, 82, 30)]; % Varying Py
+% Define parameters
+OC = 100;
+AP = 100;
+PB = 100;
+OA = 100;
+BC = 100;
+
+% Define circle parameters
+r = 50/2;  % Radius of the circle
+x_center = 100;  % X-coordinate of the center
+y_center = 100;  % Y-coordinate of the center
+
+% Create linspace for angle theta from 0 to 2*pi
+theta = linspace(0, 2*pi, 100);  % 100 points around the circle
+
+% Compute Px and Py using parametric equations
+Px_values = r * cos(theta) + x_center;
+Py_values = r * sin(theta) + y_center;
 
 % Create figure
 figure;
