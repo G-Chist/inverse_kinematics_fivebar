@@ -6,8 +6,8 @@ OA = 60;
 BC = 60;
 
 % Define Px and Py range for animation
-Px_values = linspace(20, 20, 100); % Varying Px
-Py_values = linspace(60, 105, 100); % Varying Py
+Px_values = linspace(-20, 70, 100); % Varying Px
+Py_values = linspace(60, 60, 100); % Varying Py
 
 % Create figure
 figure;
@@ -23,6 +23,10 @@ title('Five Bar Mechanism Animation');
 % Store path of P
 Px_path = [];
 Py_path = [];
+
+% Store angles theta2, theta4
+Theta2_path = [];
+Theta4_path = [];
 
 % Loop over different Px and Py values
 for i = 1:length(Px_values)
@@ -74,6 +78,14 @@ for i = 1:length(Px_values)
     C = [OC, 0];
     B = [x_b, y_b];
     P = [Px, Py];
+
+    % Now calculate angles theta2 and theta4
+    theta2 = angle_ABC(C, O, A) % theta2 = angle COA
+    theta4 = 180 - angle_ABC(O, C, B) %theta4 = angle BCQ where Q is to the right of point C = 180 degrees - angle OCB
+
+    % Store the current angles
+    Theta2_path = [Theta2_path, theta2];
+    Theta4_path = [Theta4_path, theta4];
 
     % Clear previous plot frame
     cla;
