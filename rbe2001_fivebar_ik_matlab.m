@@ -7,7 +7,7 @@ BC = 60;
 
 % Define Px and Py range for animation
 Px_values = linspace(20, 20, 100); % Varying Px
-Py_values = linspace(30, 105, 100); % Varying Py
+Py_values = linspace(60, 105, 100); % Varying Py
 
 % Create figure
 figure;
@@ -20,10 +20,18 @@ xlabel('X-axis');
 ylabel('Y-axis');
 title('Five Bar Mechanism Animation');
 
+% Store path of P
+Px_path = [];
+Py_path = [];
+
 % Loop over different Px and Py values
 for i = 1:length(Px_values)
     Px = Px_values(i);
     Py = Py_values(i);
+
+    % Store the current position of P
+    Px_path = [Px_path, Px];
+    Py_path = [Py_path, Py];
     
     % Solve for A and B positions
     syms xA yA xB yB;
@@ -67,8 +75,12 @@ for i = 1:length(Px_values)
     B = [x_b, y_b];
     P = [Px, Py];
 
-    % Clear previous plot
+    % Clear previous plot frame
     cla;
+
+    % Plot the path of P
+    plot(Px_path, Py_path, 'k-', 'LineWidth', 2, 'Color', 'r');
+    hold on;
     
     % Plot points
     plot([O(1), A(1)], [O(2), A(2)], 'k-', 'LineWidth', 2); % Line OA
@@ -81,7 +93,7 @@ for i = 1:length(Px_values)
     plot([O(1), A(1), C(1), B(1), P(1)], [O(2), A(2), C(2), B(2), P(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
 
     % Update frame
-    pause(0.02);
+    pause(0.01);
 end
 
 hold off;
