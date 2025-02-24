@@ -6,8 +6,8 @@ OA = 60;
 BC = 60;
 
 % Define Px and Py range for animation
-Px_values = linspace(-20, 70, 100); % Varying Px
-Py_values = linspace(60, 60, 100); % Varying Py
+Px_values = [linspace(-20, 50, 30), linspace(50, 50, 30), linspace(50, -20, 30), linspace(-20, -20, 30)]; % Varying Px
+Py_values = [linspace(82, 82, 30), linspace(82, 60, 30), linspace(60, 60, 30), linspace(60, 82, 30)]; % Varying Py
 
 % Create figure
 figure;
@@ -105,7 +105,7 @@ for i = 1:length(Px_values)
     plot([O(1), A(1), C(1), B(1), P(1)], [O(2), A(2), C(2), B(2), P(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
 
     % Update frame
-    pause(0.01);
+    pause(0.0001);
 end
 
 hold off;
