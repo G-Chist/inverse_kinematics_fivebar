@@ -10,17 +10,19 @@ OA = 100;
 BC = 100;
 
 % Define circle parameters
-r = 50/2;  % Radius of the circle
-x_center = 100;  % X-coordinate of the center
-y_center = 100;  % Y-coordinate of the center
+% r = 50/2;  % Radius of the circle
+% x_center = 100;  % X-coordinate of the center
+% y_center = 100;  % Y-coordinate of the center
 
 % Create linspace for angle theta from 0 to 2*pi
-theta = linspace(0, 2*pi, 100);  % 100 points around the circle
+% theta = linspace(0, 2*pi, 100);  % 100 points around the circle
 
 % Compute Px and Py using parametric equations
 % THESE LINSPACES DEFINE THE TRAJECTORY OF THE MECHANISM'S TIP
-Px_values = r * cos(theta) + x_center;
-Py_values = r * sin(theta) + y_center;
+% These linspaces define a rectangle from (70, 100) to (120, 150)
+% An array of linspaces is also a linspace btw
+Px_values = [linspace(70, 120, 30), linspace(120, 120, 30), linspace(120, 70, 30), linspace(70, 70, 30)];
+Py_values = [linspace(150, 150, 30), linspace(150, 100, 30), linspace(100, 100, 30) , linspace(100, 150, 30)];
 
 % Create figure
 figure;
@@ -77,7 +79,7 @@ for i = 1:length(Px_values)
         y_a = solutions_y_a(1);
     end
 
-    if solutions_x_b(1) < OC
+    if solutions_x_b(1) > OC
         x_b = solutions_x_b(2);
         y_b = solutions_y_b(2);
     else
