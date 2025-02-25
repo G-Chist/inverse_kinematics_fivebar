@@ -4,10 +4,20 @@ close all;  % Closes all figure windows
 
 % Define parameters
 OC = 100;
-AP = 100;
-PB = 100;
-OA = 100;
-BC = 100;
+AP = 120;
+PB = 120;
+OA = 140;
+BC = 110;
+
+Height_Romi = 61;
+
+Box_start_offset = 15;
+
+% Define warehouse parameters
+Height_box1 = 182;
+Height_box2 = 224;
+Height_top = 266;
+
 
 % Define circle parameters
 % r = 50/2;  % Radius of the circle
@@ -19,10 +29,21 @@ BC = 100;
 
 % Compute Px and Py using parametric equations
 % THESE LINSPACES DEFINE THE TRAJECTORY OF THE MECHANISM'S TIP
-% These linspaces define a rectangle from (70, 100) to (120, 150)
 % An array of linspaces is also a linspace btw
-Px_values = [linspace(70, 120, 30), linspace(120, 120, 30), linspace(120, 70, 30), linspace(70, 70, 30)];
-Py_values = [linspace(150, 150, 30), linspace(150, 100, 30), linspace(100, 100, 30) , linspace(100, 150, 30)];
+Px_values = [linspace(80, 130, 30),...
+             linspace(130, 80, 30),...
+             linspace(80, 80, 30),...
+             linspace(80, 130, 30),...
+             linspace(130, 80, 30),...
+             linspace(80, 80, 30),...
+             linspace(80, 130, 30)];
+Py_values = [linspace(Height_box1+Box_start_offset,Height_box1+Box_start_offset, 30),...
+             linspace(Height_box1+Box_start_offset,Height_box1+Box_start_offset, 30),...
+             linspace(Height_box1+Box_start_offset,Height_box2+Box_start_offset, 30),...
+             linspace(Height_box2+Box_start_offset,Height_box2+Box_start_offset, 30),...
+             linspace(Height_box2+Box_start_offset,Height_box2+Box_start_offset, 30),...
+             linspace(Height_box2+Box_start_offset,Height_top+Box_start_offset, 30),...
+             linspace(Height_top+Box_start_offset,Height_top+Box_start_offset, 30),];
 
 % Create figure
 figure;
@@ -30,7 +51,7 @@ hold on;
 grid on;
 axis equal;
 xlim([-100, 200]);  % Set x-axis limits
-ylim([0, 200]);    % Set y-axis limits
+ylim([0, 300]);    % Set y-axis limits
 xlabel('X-axis');
 ylabel('Y-axis');
 title('Five Bar Mechanism Animation');
@@ -55,10 +76,10 @@ for i = 1:length(Px_values)
     % Solve for A and B positions
     syms xA yA xB yB;
     
-    eqOA = xA^2 + yA^2 == OA^2;
+    eqOA = xA^2 + (yA - Height_Romi)^2 == OA^2;
     eqPA = (xA - Px)^2 + (yA - Py)^2 == AP^2;
     eqPB = (xB - Px)^2 + (yB - Py)^2 == PB^2;
-    eqBC = (xB - OC)^2 + yB^2 == BC^2;
+    eqBC = (xB - OC)^2 + (yB - Height_Romi)^2 == BC^2;
     
     % Solve the system of equations
     solutionsA = solve([eqOA, eqPA], [xA, yA]);
@@ -88,9 +109,9 @@ for i = 1:length(Px_values)
     end
     
     % Define points
-    O = [0, 0];
+    O = [0, Height_Romi];
     A = [x_a, y_a];
-    C = [OC, 0];
+    C = [OC, Height_Romi];
     B = [x_b, y_b];
     P = [Px, Py];
 
@@ -115,6 +136,14 @@ for i = 1:length(Px_values)
     plot([O(1), C(1)], [O(2), C(2)], 'k-', 'LineWidth', 2); % Line OC
     plot([P(1), A(1)], [P(2), A(2)], 'k-', 'LineWidth', 2); % Line PA
     plot([P(1), B(1)], [P(2), B(2)], 'k-', 'LineWidth', 2); % Line PB
+
+    % Plot warehouse
+    plot([160, 160], [0, Height_box1], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([130, 160], [Height_box1, Height_box1], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([160, 160], [0, Height_box2], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([130, 160], [Height_box2, Height_box2], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([160, 160], [0, Height_top], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([130, 160], [Height_top, Height_top], 'k-', 'LineWidth', 2, 'Color', 'g');
     
     % Plot markers
     plot([O(1), A(1), C(1), B(1), P(1)], [O(2), A(2), C(2), B(2), P(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
