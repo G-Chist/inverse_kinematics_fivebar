@@ -119,6 +119,13 @@ for i = 1:length(Px_values)
     % Plot markers
     plot([O(1), A(1), C(1), B(1), P(1)], [O(2), A(2), C(2), B(2), P(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
 
+    % Label the points
+    text(A(1), A(2), ' A', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(B(1), B(2), ' B', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(C(1), C(2), ' C', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(O(1), O(2), ' O', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(P(1), P(2), ' P', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    
     % Update frame
     pause(0.0001);
 end
