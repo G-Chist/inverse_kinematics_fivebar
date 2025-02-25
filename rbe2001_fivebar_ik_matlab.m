@@ -18,6 +18,7 @@ y_center = 100;  % Y-coordinate of the center
 theta = linspace(0, 2*pi, 100);  % 100 points around the circle
 
 % Compute Px and Py using parametric equations
+% THESE LINSPACES DEFINE THE TRAJECTORY OF THE MECHANISM'S TIP
 Px_values = r * cos(theta) + x_center;
 Py_values = r * sin(theta) + y_center;
 
