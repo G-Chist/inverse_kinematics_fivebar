@@ -27,22 +27,25 @@ Height_top = 266;
 % Create linspace for angle theta from 0 to 2*pi
 % theta = linspace(0, 2*pi, 100);  % 100 points around the circle
 
+% Define simulation parameters
+Chunks = 25;
+
 % THESE LINSPACES DEFINE THE TRAJECTORY OF THE MECHANISM'S TIP
 % An array of linspaces is also a linspace btw
-Px_values = [linspace(80, 130, 3),...
-             linspace(130, 80, 3),...
-             linspace(80, 80, 3),...
-             linspace(80, 130, 3),...
-             linspace(130, 80, 3),...
-             linspace(80, 80, 3),...
-             linspace(80, 130, 3)];
-Py_values = [linspace(Height_box1+Box_start_offset,Height_box1+Box_start_offset, 3),...
-             linspace(Height_box1+Box_start_offset,Height_box1+Box_start_offset, 3),...
-             linspace(Height_box1+Box_start_offset,Height_box2+Box_start_offset, 3),...
-             linspace(Height_box2+Box_start_offset,Height_box2+Box_start_offset, 3),...
-             linspace(Height_box2+Box_start_offset,Height_box2+Box_start_offset, 3),...
-             linspace(Height_box2+Box_start_offset,Height_top+Box_start_offset, 3),...
-             linspace(Height_top+Box_start_offset,Height_top+Box_start_offset, 3),];
+Px_values = [linspace(80, 130, Chunks),...
+             linspace(130, 80, Chunks),...
+             linspace(80, 80, Chunks),...
+             linspace(80, 130, Chunks),...
+             linspace(130, 80, Chunks),...
+             linspace(80, 80, Chunks),...
+             linspace(80, 130, Chunks)];
+Py_values = [linspace(Height_box1+Box_start_offset,Height_box1+Box_start_offset, Chunks),...
+             linspace(Height_box1+Box_start_offset,Height_box1+Box_start_offset, Chunks),...
+             linspace(Height_box1+Box_start_offset,Height_box2+Box_start_offset, Chunks),...
+             linspace(Height_box2+Box_start_offset,Height_box2+Box_start_offset, Chunks),...
+             linspace(Height_box2+Box_start_offset,Height_box2+Box_start_offset, Chunks),...
+             linspace(Height_box2+Box_start_offset,Height_top+Box_start_offset, Chunks),...
+             linspace(Height_top+Box_start_offset,Height_top+Box_start_offset, Chunks)];
 
 % Create figure
 figure;
@@ -114,6 +117,17 @@ for i = 1:length(Px_values)
     B = [x_b, y_b];
     P = [Px, Py];
 
+    Ox = O(1);
+    Oy = O(2);
+    Ax = A(1);
+    Ay = A(2);
+    Bx = B(1);
+    By = B(2);
+    Cx = C(1);
+    Cy = C(2);
+    Px = P(1);
+    Py = P(2);
+ 
     % Now calculate angles theta2 and theta4
     theta2 = angle_ABC(C, O, A) % theta2 = angle COA
     theta4 = 180 - angle_ABC(O, C, B) %theta4 = angle BCQ where Q is to the right of point C = 180 degrees - angle OCB
@@ -153,7 +167,84 @@ for i = 1:length(Px_values)
     text(C(1)+10, C(2), ' C', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
     text(O(1)-25, O(2), ' O', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
     text(P(1)+5, P(2), ' P', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+
+    % Define symbolic variables
+    syms FAx FAy FBx FBy FOx FOy FCx FCy FPx FPy TO TC
+
+    % Define equations (assuming a force of 5N is applied to the tip in the negative Y direction)
+    F = -5;
+
+    eqAPx = FAx + FPx == 0;
+    eqAPy = FAy + FPy + F == 0;
+    eqAPT = FAx*(Py-Ay) - FAy*(Px-Ax) == 0;
+
+    eqOAx = FAx + FOx == 0;
+    eqOAy = FAy  + FOy == 0;
+    eqOAT = TO - FAy*(Ax-Ox) + FAx*(Ay-Oy) == 0;
+
+    eqBCx = FBx + FCx == 0;
+    eqBCy = FBy + FCy == 0;
+    eqBCT = TC + FBx*(By-Cy) + FBy*(Cx-Bx) == 0;
+
+    eqSYSx = FOx + FCx == 0;
+    eqSYSy = FOy + FCy + F == 0;
+    eqSYST = TO + TC + (Px-Ox)*F == 0;
+
+    % Solve system
+    vars = [FAx, FAy, FBx, FBy, FCx, FCy, FOx, FOy, FPx, FPy, TO, TC]; 
+    [A, b] = equationsToMatrix([eqAPx, eqAPy, eqAPT, eqOAx, eqOAy, eqOAT, eqBCx, eqBCy, eqBCT, eqSYSx, eqSYSy, eqSYST], vars);
+    solution = linsolve(A, b);
+
+    % Convert solution to numeric values
+    solution_numeric = double(solution);
     
+    % Assign values individually
+    FAx_value = solution_numeric(1);
+    FAy_value = solution_numeric(2);
+    FBx_value = solution_numeric(3);
+    FBy_value = solution_numeric(4);
+    FCx_value = solution_numeric(5);
+    FCy_value = solution_numeric(6);
+    FOx_value = solution_numeric(7);
+    FOy_value = solution_numeric(8);
+    FPx_value = solution_numeric(9);
+    FPy_value = solution_numeric(10);
+    TO_value  = solution_numeric(11);
+    TC_value  = solution_numeric(12);
+    
+    % Display results
+    fprintf("FAx = %f\n", FAx_value);
+    fprintf("FAy = %f\n", FAy_value);
+    fprintf("FBx = %f\n", FBx_value);
+    fprintf("FBy = %f\n", FBy_value);
+    fprintf("FCx = %f\n", FCx_value);
+    fprintf("FCy = %f\n", FCy_value);
+    fprintf("FOx = %f\n", FOx_value);
+    fprintf("FOy = %f\n", FOy_value);
+    fprintf("FPx = %f\n", FPx_value);
+    fprintf("FPy = %f\n", FPy_value);
+    fprintf("TO  = %f\n", TO_value);
+    fprintf("TC  = %f\n", TC_value);
+
+
+    % Plot the forces
+    quiver(Px, Py, 0, F*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, FCx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, 0, FCy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, FBx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, 0, FBy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, FAx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, 0, FAy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, FOx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, 0, FOy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, FPx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, 0, FPy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+
+    % Label the torques
+    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    % Label the torques
+    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+        
     % Update frame
     pause(0.0001);
 end
