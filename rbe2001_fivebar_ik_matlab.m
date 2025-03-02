@@ -28,7 +28,7 @@ Height_top = 266;
 % theta = linspace(0, 2*pi, 100);  % 100 points around the circle
 
 % Define simulation parameters
-Chunks = 25;
+Chunks = 2;
 
 % THESE LINSPACES DEFINE THE TRAJECTORY OF THE MECHANISM'S TIP
 % An array of linspaces is also a linspace btw
@@ -179,7 +179,7 @@ for i = 1:length(Px_values)
     eqAPT = FAx*(Py-Ay) - FAy*(Px-Ax) == 0;
 
     eqOAx = FAx + FOx == 0;
-    eqOAy = FAy  + FOy == 0;
+    eqOAy = FAy + FOy == 0;
     eqOAT = TO - FAy*(Ax-Ox) + FAx*(Ay-Oy) == 0;
 
     eqBCx = FBx + FCx == 0;
@@ -238,7 +238,7 @@ for i = 1:length(Px_values)
     quiver(Ox, Oy, FOx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
     quiver(Ox, Oy, 0, FOy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
     quiver(Px, Py, FPx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Px, Py, 0, FPy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py+F*2, 0, FPy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     % Label the torques
     text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
