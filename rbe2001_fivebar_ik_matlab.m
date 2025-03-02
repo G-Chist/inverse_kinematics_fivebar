@@ -28,7 +28,7 @@ Height_top = 266;
 % theta = linspace(0, 2*pi, 100);  % 100 points around the circle
 
 % Define simulation parameters
-Chunks = 1;
+Chunks = 10;
 Scaling_factor = 5;
 
 % THESE LINSPACES DEFINE THE TRAJECTORY OF THE MECHANISM'S TIP
@@ -247,9 +247,9 @@ for i = 1:length(Px_values)
     quiver(Px, Py, FPx_value*Scaling_factor, FPy_value*Scaling_factor+F*Scaling_factor, 0, 'g', 'LineWidth', 2, 'MaxHeadSize', 0.5); % Resultant
 
     % Label the torques
-    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value) ' N*mm'], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
     % Label the torques
-    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value) ' N*mm'], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
         
     % Update frame
     pause(0.0001);
@@ -303,7 +303,7 @@ hold off;
     quiver(Ox, Oy, 0, FOy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     % Label the torques
-    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value) ' N*mm'], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
     hold off;
 
     % FBD of link AP
@@ -364,7 +364,7 @@ hold off;
     quiver(Bx, By, 0, FBy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     % Label the torques
-    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value) ' N*mm'], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
 
     hold off;
 
@@ -396,9 +396,9 @@ hold off;
     quiver(Ox, Oy, 0, FOy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     % Label the torques
-    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value) ' N*mm'], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
     % Label the torques
-    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value) ' N*mm'], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
 
     hold off;
 
