@@ -5,11 +5,11 @@ close all;  % Closes all figure windows
 % Define parameters
 OC = 100;
 AP = 120;
-PB = 120;
-OA = 140;
-BC = 110;
+PB = 95;
+OA = 120;
+BC = 95;
 
-Height_Romi = 61;
+Height_Romi = 95;
 
 Box_start_offset = 15;
 
@@ -17,6 +17,8 @@ Box_start_offset = 15;
 Height_box1 = 182;
 Height_box2 = 224;
 Height_top = 266;
+
+Box_base_x = 150;
 
 
 % Define circle parameters
@@ -53,7 +55,7 @@ figure;
 hold on;
 grid on;
 axis equal;
-xlim([-100, 200]);  % Set x-axis limits
+xlim([-100, 300]);  % Set x-axis limits
 ylim([0, 400]);    % Set y-axis limits
 xlabel('X-axis');
 ylabel('Y-axis');
@@ -130,8 +132,8 @@ for i = 1:length(Px_values)
     Py = P(2);
  
     % Now calculate angles theta2 and theta4
-    theta2 = angle_ABC(C, O, A) % theta2 = angle COA
-    theta4 = 180 - angle_ABC(O, C, B) %theta4 = angle BCQ where Q is to the right of point C = 180 degrees - angle OCB
+    theta2 = angle_ABC(C, O, A); % theta2 = angle COA
+    theta4 = 180 - angle_ABC(O, C, B); %theta4 = angle BCQ where Q is to the right of point C = 180 degrees - angle OCB
 
     % Store the current angles
     Theta2_path = [Theta2_path, theta2];
@@ -152,12 +154,12 @@ for i = 1:length(Px_values)
     plot([P(1), B(1)], [P(2), B(2)], 'k-', 'LineWidth', 2); % Line PB
 
     % Plot warehouse
-    plot([160, 160], [0, Height_box1], 'k-', 'LineWidth', 2, 'Color', 'g');
-    plot([130, 160], [Height_box1, Height_box1], 'k-', 'LineWidth', 2, 'Color', 'g');
-    plot([160, 160], [0, Height_box2], 'k-', 'LineWidth', 2, 'Color', 'g');
-    plot([130, 160], [Height_box2, Height_box2], 'k-', 'LineWidth', 2, 'Color', 'g');
-    plot([160, 160], [0, Height_top], 'k-', 'LineWidth', 2, 'Color', 'g');
-    plot([130, 160], [Height_top, Height_top], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([Box_base_x+30, Box_base_x+30], [0, Height_box1], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([Box_base_x, Box_base_x+30], [Height_box1, Height_box1], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([Box_base_x+30, Box_base_x+30], [0, Height_box2], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([Box_base_x, Box_base_x+30], [Height_box2, Height_box2], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([Box_base_x+30, Box_base_x+30], [0, Height_top], 'k-', 'LineWidth', 2, 'Color', 'g');
+    plot([Box_base_x, Box_base_x+30], [Height_top, Height_top], 'k-', 'LineWidth', 2, 'Color', 'g');
     
     % Plot markers
     plot([O(1), A(1), C(1), B(1), P(1)], [O(2), A(2), C(2), B(2), P(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
@@ -214,18 +216,18 @@ for i = 1:length(Px_values)
     TC_value  = solution_numeric(12);
     
     % Display results
-    fprintf("FAx = %f\n", FAx_value);
-    fprintf("FAy = %f\n", FAy_value);
-    fprintf("FBx = %f\n", FBx_value);
-    fprintf("FBy = %f\n", FBy_value);
-    fprintf("FCx = %f\n", FCx_value);
-    fprintf("FCy = %f\n", FCy_value);
-    fprintf("FOx = %f\n", FOx_value);
-    fprintf("FOy = %f\n", FOy_value);
-    fprintf("FPx = %f\n", FPx_value);
-    fprintf("FPy = %f\n", FPy_value);
-    fprintf("TO  = %f\n", TO_value);
-    fprintf("TC  = %f\n", TC_value);
+    %fprintf("FAx = %f\n", FAx_value);
+    %fprintf("FAy = %f\n", FAy_value);
+    %fprintf("FBx = %f\n", FBx_value);
+    %fprintf("FBy = %f\n", FBy_value);
+    %fprintf("FCx = %f\n", FCx_value);
+    %fprintf("FCy = %f\n", FCy_value);
+    %fprintf("FOx = %f\n", FOx_value);
+    %fprintf("FOy = %f\n", FOy_value);
+    %fprintf("FPx = %f\n", FPx_value);
+    %fprintf("FPy = %f\n", FPy_value);
+    %fprintf("TO  = %f\n", TO_value);
+    %fprintf("TC  = %f\n", TC_value);
 
 
     % Plot the forces
