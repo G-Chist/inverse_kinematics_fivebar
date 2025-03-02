@@ -248,8 +248,153 @@ for i = 1:length(Px_values)
     % Update frame
     pause(0.0001);
 end
-
 hold off;
+
+    % Define points again
+    O = [0, Height_Romi];
+    A = [x_a, y_a];
+    C = [OC, Height_Romi];
+    B = [x_b, y_b];
+    P = [Px, Py];
+
+    Ox = O(1);
+    Oy = O(2);
+    Ax = A(1);
+    Ay = A(2);
+    Bx = B(1);
+    By = B(2);
+    Cx = C(1);
+    Cy = C(2);
+    Px = P(1);
+    Py = P(2);
+    
+    % FBD of link OA
+
+    figure;
+    hold on;
+    grid on;
+    axis equal;
+    xlim([-100, 200]);  % Set x-axis limits
+    ylim([0, 300]);    % Set y-axis limits
+    xlabel('X-axis');
+    ylabel('Y-axis');
+    title('Five Bar Mechanism FBDs');
+    % Plot points
+    plot([O(1), A(1)], [O(2), A(2)], 'k-', 'LineWidth', 2); % Line OA
+    
+    % Plot markers
+    plot([O(1), A(1)], [O(2), A(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
+
+    % Label the points
+    text(A(1)-25, A(2), ' A', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(O(1)-25, O(2)+10, ' O', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+
+
+    % Plot the forces
+    quiver(Ax, Ay, FAx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, 0, FAy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, FOx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, 0, FOy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+
+    % Label the torques
+    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    hold off;
+
+    % FBD of link AP
+    
+    figure;
+    hold on;
+    grid on;
+    axis equal;
+    xlim([-100, 200]);  % Set x-axis limits
+    ylim([0, 300]);    % Set y-axis limits
+    xlabel('X-axis');
+    ylabel('Y-axis');
+    title('Five Bar Mechanism FBDs');
+    % Plot points
+    plot([A(1), P(1)], [A(2), P(2)], 'k-', 'LineWidth', 2); % Line AP
+    
+    % Plot markers
+    plot([A(1), P(1)], [A(2), P(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
+
+    % Label the points
+    text(A(1)-25, A(2), ' A', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(P(1)-25, P(2)+10, ' P', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+
+    % Plot the forces
+    quiver(Px, Py, 0, F*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, FAx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, 0, FAy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, FPx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py+F*2, 0, FPy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+
+    hold off;
+
+    % FBD of link BC
+    
+    figure;
+    hold on;
+    grid on;
+    axis equal;
+    xlim([-100, 200]);  % Set x-axis limits
+    ylim([0, 300]);    % Set y-axis limits
+    xlabel('X-axis');
+    ylabel('Y-axis');
+    title('Five Bar Mechanism FBDs');
+    % Plot points
+    plot([B(1), C(1)], [B(2), C(2)], 'k-', 'LineWidth', 2); % Line BC
+    
+    % Plot markers
+    plot([B(1), C(1)], [B(2), C(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
+
+    % Label the points
+    text(B(1)-25, B(2)+10, ' B', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(C(1)-25, C(2), ' C', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+
+    % Plot the forces
+    quiver(Cx, Cy, FCx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, 0, FCy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, FBx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, 0, FBy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+
+    % Label the torques
+    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+
+    hold off;
+
+    % FBD of link OC
+    
+    figure;
+    hold on;
+    grid on;
+    axis equal;
+    xlim([-100, 200]);  % Set x-axis limits
+    ylim([0, 300]);    % Set y-axis limits
+    xlabel('X-axis');
+    ylabel('Y-axis');
+    title('Five Bar Mechanism FBDs');
+    % Plot points
+    plot([O(1), C(1)], [O(2), C(2)], 'k-', 'LineWidth', 2); % Line OC
+    
+    % Plot markers
+    plot([O(1), C(1)], [O(2), C(2)], 'bo', 'MarkerSize', 8, 'MarkerFaceColor', 'b');
+
+    % Label the points
+    text(O(1)-25, O(2)+10, ' O', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    text(C(1)-25, C(2), ' C', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+
+    % Plot the forces
+    quiver(Cx, Cy, FCx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, 0, FCy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, FOx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, 0, FOy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+
+    % Label the torques
+    text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+    % Label the torques
+    text(Cx-40, Cy-50, ['TC = ' num2str(TC_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
+
+    hold off;
 
 % Function to calculate angle given three points
 function theta_deg = angle_ABC(A, B, C)
