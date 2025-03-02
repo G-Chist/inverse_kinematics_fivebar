@@ -29,6 +29,7 @@ Height_top = 266;
 
 % Define simulation parameters
 Chunks = 1;
+Scaling_factor = 5;
 
 % THESE LINSPACES DEFINE THE TRAJECTORY OF THE MECHANISM'S TIP
 % An array of linspaces is also a linspace btw
@@ -188,7 +189,7 @@ for i = 1:length(Px_values)
 
     eqSYSx = FOx + FCx == 0;
     eqSYSy = FOy + FCy + F == 0;
-    eqSYST = TO + TC + (Px-Ox)*F - FCy*(Cx-Ox) == 0;
+    eqSYST = TO + TC - (Px-Ox)*F - FCy*(Cx-Ox) == 0;
 
     % Solve system
     vars = [FAx, FAy, FBx, FBy, FCx, FCy, FOx, FOy, FPx, FPy, TO, TC]; 
@@ -228,17 +229,22 @@ for i = 1:length(Px_values)
 
 
     % Plot the forces
-    quiver(Px, Py, 0, F*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Cx, Cy, FCx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Cx, Cy, 0, FCy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Bx, By, FBx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Bx, By, 0, FBy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ax, Ay, FAx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ax, Ay, 0, FAy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ox, Oy, FOx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ox, Oy, 0, FOy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Px, Py, FPx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Px, Py, 0, FPy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, 0, F*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, FCx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, 0, FCy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, FCx_value*Scaling_factor, FCy_value*Scaling_factor, 0, 'g', 'LineWidth', 2, 'MaxHeadSize', 0.5); % Resultant
+    quiver(Bx, By, FBx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, 0, FBy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, FBx_value*Scaling_factor, FBy_value*Scaling_factor, 0, 'g', 'LineWidth', 2, 'MaxHeadSize', 0.5); % Resultant
+    quiver(Ax, Ay, FAx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, 0, FAy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, FAx_value*Scaling_factor, FAy_value*Scaling_factor, 0, 'g', 'LineWidth', 2, 'MaxHeadSize', 0.5); % Resultant
+    quiver(Ox, Oy, FOx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, 0, FOy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, FOx_value*Scaling_factor, FOy_value*Scaling_factor, 0, 'g', 'LineWidth', 2, 'MaxHeadSize', 0.5); % Resultant
+    quiver(Px, Py, FPx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, 0, FPy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, FPx_value*Scaling_factor, FPy_value*Scaling_factor+F*Scaling_factor, 0, 'g', 'LineWidth', 2, 'MaxHeadSize', 0.5); % Resultant
 
     % Label the torques
     text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
@@ -291,10 +297,10 @@ hold off;
 
 
     % Plot the forces
-    quiver(Ax, Ay, FAx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ax, Ay, 0, FAy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ox, Oy, FOx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ox, Oy, 0, FOy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, FAx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, 0, FAy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, FOx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, 0, FOy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     % Label the torques
     text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
@@ -322,11 +328,11 @@ hold off;
     text(P(1)-25, P(2)+10, ' P', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
 
     % Plot the forces
-    quiver(Px, Py, 0, F*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ax, Ay, FAx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ax, Ay, 0, FAy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Px, Py, FPx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Px, Py, 0, FPy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, 0, F*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, FAx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ax, Ay, 0, FAy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, FPx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Px, Py, 0, FPy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     hold off;
 
@@ -352,10 +358,10 @@ hold off;
     text(C(1)-25, C(2), ' C', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
 
     % Plot the forces
-    quiver(Cx, Cy, FCx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Cx, Cy, 0, FCy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Bx, By, FBx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Bx, By, 0, FBy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, FCx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, 0, FCy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, FBx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Bx, By, 0, FBy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     % Label the torques
     text(Cx-40, Cy-50, ['TC = ' num2str(TC_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
@@ -384,10 +390,10 @@ hold off;
     text(C(1)-25, C(2), ' C', 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
 
     % Plot the forces
-    quiver(Cx, Cy, FCx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Cx, Cy, 0, FCy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ox, Oy, FOx_value*2, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
-    quiver(Ox, Oy, 0, FOy_value*2, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, FCx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Cx, Cy, 0, FCy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, FOx_value*Scaling_factor, 0, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
+    quiver(Ox, Oy, 0, FOy_value*Scaling_factor, 0, 'b', 'LineWidth', 2, 'MaxHeadSize', 0.5);
 
     % Label the torques
     text(Ox-10, Oy-30, ['TO = ' num2str(TO_value)], 'FontSize', 12, 'FontWeight', 'bold', 'Color', 'b');
